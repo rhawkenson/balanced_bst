@@ -6,5 +6,6 @@ tree = Tree.new(arr)
 
 
 p tree.insert(6)
-
+tree.pretty_print
+tree.delete(8)
 tree.pretty_print

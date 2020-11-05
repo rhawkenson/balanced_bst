@@ -55,12 +55,18 @@ class Tree
           previous.left = current.right 
         else 
           previous.left = current.left
+          store = current.right
+          current = current.left
+          current.right = store
         end 
       else 
         if current.left.nil? 
           previous.right = current.right 
         else  
           previous.right = current.left
+          store = current.right
+          current = current.left
+          current.right = store
         end
       end 
     else 
