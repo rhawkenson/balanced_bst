@@ -5,6 +5,4 @@ tree = Tree.new(arr)
 #p tree
 
 
-tree.insert(6)
-tree.delete(8)
 tree.pretty_print

@@ -99,6 +99,23 @@ class Tree
     end
   end 
 
+  def find(value, current = @root)
+    if value == current.data
+      puts "The information you are looking for is:"
+      p current
+    else 
+      if value < current.data
+        find(value, current.left)
+      else 
+        find(value, current.right)
+      end 
+    end 
+  end 
+
+  def level_order
+    
+  end 
+
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
