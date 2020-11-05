@@ -50,7 +50,7 @@ class Tree
 
   def delete(value, current = @root, previous = @root)
     if value == current.data
-      if previous.left == current 
+      if previous.left == current #left side of tree 
         if current.left.nil? #one child on right
           previous.left = current.right 
         else
@@ -65,21 +65,21 @@ class Tree
             replacement.right = current.right
           end
          end 
-      else 
+      else #right side of tree 
         if current.left.nil? #one child on right
           previous.right = current.right 
         else 
           if current.right.nil? #one child on left
           previous.right = current.left 
           else #two children 
-            if previous == current
+            if previous == current #delete level 1 root 
               node = current.right
               replacement = node.left
               delete(replacement.data)
-              previous = replacement
-              previous.left = current.left
-              previous.right = current.right
-            else
+              @root = replacement
+              replacement.left = previous.left
+              replacement.right = previous.right
+            else 
               node = current.right
               replacement = node.left
               delete(replacement.data)
