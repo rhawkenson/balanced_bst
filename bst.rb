@@ -112,8 +112,13 @@ class Tree
     end 
   end 
 
-  def level_order
-    
+  def level_order(current = @root, queue = [], visited = [])
+    return visited if visited.length >= 11
+    queue.delete_at(0)
+    queue << current.left unless current.left.nil?
+    queue << current.right unless current.right.nil?
+    visited << current.data
+    level_order(queue[0], queue, visited)
   end 
 
 

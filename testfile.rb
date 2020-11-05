@@ -5,4 +5,4 @@ tree = Tree.new(arr)
 #p tree
 
 
-tree.pretty_print
+p tree.level_order
