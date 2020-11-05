@@ -10,8 +10,8 @@ end
 
 class Tree
   attr_accessor :root
-  def initialize(arr)
-    @arr = arr.sort!.uniq!
+  def initialize(entered_arr)
+    @arr = entered_arr.sort.uniq
     @root = build_tree(@arr)
   end 
 
@@ -33,12 +33,45 @@ class Tree
 
   def insert(value, current = @root)
     #Find the leaf 
-    current.left.data > value ? true : false
-
-    # unless current.left.data == nil and current.right.data == nil 
-    #   value < current.data ? insert(value, current.right) : insert(current.right)
-    # end
+    if value < current.data
+      if current.left.nil?
+        current.left = Node.new(value)
+      else 
+        insert(value, current.left)
+      end
+    else
+      if current.right.nil?
+        current.right = Node.new(value)
+      else 
+        insert(value, current.right)
+      end 
+    end 
   end
+
+  def delete(value, current = @root, previous = @root)
+    if value == current.data
+      if previous.left == current 
+        if current.left.nil? 
+          previous.left = current.right 
+        else 
+          previous.left = current.left
+        end 
+      else 
+        if current.left.nil? 
+          previous.right = current.right 
+        else  
+          previous.right = current.left
+        end
+      end 
+    else 
+      if value > current.data
+        delete(value, current.right, current)
+      else 
+        delete(value, current.left, current)
+      end
+    end
+  end 
+
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
