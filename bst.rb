@@ -51,23 +51,44 @@ class Tree
   def delete(value, current = @root, previous = @root)
     if value == current.data
       if previous.left == current 
-        if current.left.nil? 
+        if current.left.nil? #one child on right
           previous.left = current.right 
-        else 
-          previous.left = current.left
-          store = current.right
-          current = current.left
-          current.right = store
-        end 
+        else
+          if current.right.nil? #one child on left
+            previous.left = current.left
+          else #two children 
+            node = current.right
+            replacement = node.left
+            delete(replacement.data)
+            previous.left = replacement
+            replacement.left = current.left
+            replacement.right = current.right
+          end
+         end 
       else 
-        if current.left.nil? 
+        if current.left.nil? #one child on right
           previous.right = current.right 
-        else  
-          previous.right = current.left
-          store = current.right
-          current = current.left
-          current.right = store
-        end
+        else 
+          if current.right.nil? #one child on left
+          previous.right = current.left 
+          else #two children 
+            if previous == current
+              node = current.right
+              replacement = node.left
+              delete(replacement.data)
+              previous = replacement
+              previous.left = current.left
+              previous.right = current.right
+            else
+              node = current.right
+              replacement = node.left
+              delete(replacement.data)
+              previous.right = replacement
+              replacement.left = current.left
+              replacement.right = current.right
+            end 
+          end
+         end 
       end 
     else 
       if value > current.data
