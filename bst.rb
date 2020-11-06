@@ -22,7 +22,7 @@ class Tree
     root.left = build_tree(arr[0..(middle-1)]) 
     root.right = build_tree(arr[(middle+1)...arr.length])
 
-    # Last value were not saving to root, only to children
+    # Leaf values were not saving to root, only to children
     if root.right != nil && root.left == nil
       root.right = Node.new(root.right)
     elsif root.right == nil && root.left != nil 
@@ -150,6 +150,44 @@ class Tree
     postorder(current.right, visited)
     visited << current.data
   end 
+
+  def height(value, current = @root, counter = 1)
+    return counter if value == current.data
+    if value < current.data
+      height(value, current.left, counter+=1)
+    else 
+      height(value, current.right, counter+=1)
+    end 
+  end 
+
+  def depth(current = @root)
+    return 0 if current.nil?
+    left_tree = depth(current.left)
+    right_tree = depth(current.right)
+    
+    if left_tree > right_tree
+      return left_tree + 1
+    else 
+      return right_tree + 1
+    end
+  end 
+
+  def balanced?(current = @root)
+    left = depth(current.left)
+    right = depth(current.right)
+    
+    if (left-right).abs <= 1 
+      true
+    else 
+      false
+    end 
+  end 
+
+  def rebalance
+    arr = self.level_order.sort
+    build_tree(arr)
+  end 
+
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
