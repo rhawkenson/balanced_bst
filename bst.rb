@@ -16,20 +16,16 @@ class Tree
   end 
 
   def build_tree(arr)
+    start = 0
+    finish = arr.length-1
     middle = arr.length/2
     root = Node.new(arr[middle])
-    return root.data if arr.length <= 1
-    root.left = build_tree(arr[0..(middle-1)]) 
-    root.right = build_tree(arr[(middle+1)...arr.length])
 
-    # Leaf values were not saving to root, only to children
-    if root.right != nil && root.left == nil
-      root.right = Node.new(root.right)
-    elsif root.right == nil && root.left != nil 
-      root.left = Node.new(root.left)
-    end
+    return root.data if start > finish
+    root.left = build_tree(arr[0...middle]) 
+    root.right = build_tree(arr[middle+1..-1]) 
     return root
-  end 
+  end  
 
   def insert(value, current = @root)
     #Find the leaf 
@@ -184,8 +180,7 @@ class Tree
   end 
 
   def rebalance
-    arr = self.level_order.sort
-    build_tree(arr)
+    @root = build_tree(level_order)
   end 
 
 
