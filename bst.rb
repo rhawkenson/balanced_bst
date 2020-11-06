@@ -130,10 +130,26 @@ class Tree
       level_order(queue[0], queue, visited)
   end 
 
-  def preorder()
-    return 
+  def preorder(current = @root, visited = [])
+    return visited if current.nil?
+    visited << current.data
+    preorder(current.left, visited)
+    preorder(current.right, visited)
   end
 
+  def inorder(current = @root, visited=[])
+    return visited if current.nil?
+    inorder(current.left, visited)
+    visited << current.data
+    inorder(current.right, visited)
+  end 
+
+  def postorder(current = @root, visited=[])
+    return visited if current.nil?
+    postorder(current.left, visited)
+    postorder(current.right, visited)
+    visited << current.data
+  end 
 
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
